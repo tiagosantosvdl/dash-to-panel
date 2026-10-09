@@ -1,8 +1,11 @@
 .~
 *~
 gschemas.compiled
-dash-to-panel@jderose9.github.com*.zip
+dash-to-panel@*.zip
 *.mo
 po/dash-to-panel.pot
 ui/*.ui.h
 node_modules/
+_build/
+dist/
+__pycache__/

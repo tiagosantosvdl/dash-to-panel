@@ -85,25 +85,50 @@
       <summary>Panel positions</summary>
       <description>Panel positions (JSON).</description>
     </key>
+    <key name="panel-positions-default" type="s">
+      <default>''</default>
+      <summary>Default panel position</summary>
+      <description>Default panel position for new monitors.</description>
+    </key>
     <key name="panel-element-positions" type="s">
       <default>'{}'</default>
       <summary>Panel element positions</summary>
       <description>Panel element positions (JSON).</description>
+    </key>
+    <key name="panel-element-positions-default" type="s">
+      <default>''</default>
+      <summary>Default panel element positions</summary>
+      <description>Default panel element positions for new monitors (JSON).</description>
     </key>
     <key type="s" name="panel-lengths">
       <default>'{}'</default>
       <summary>Percentages of screen edge for panel to span, -1 for dynamic length (dock mode)</summary>
       <description>Length of the panels, in percent (JSON).</description>
     </key>
+    <key type="s" name="panel-lengths-default">
+      <default>''</default>
+      <summary>Default panel length</summary>
+      <description>Default panel length for new monitors.</description>
+    </key>
     <key type="s" name="panel-anchors">
       <default>'{}'</default>
       <summary>Positions along screen edge</summary>
       <description>Where to show the panels if it is not the full length of the screen edge (JSON).</description>
     </key>
+    <key type="s" name="panel-anchors-default">
+      <default>''</default>
+      <summary>Default panel anchor</summary>
+      <description>Default panel anchor for new monitors.</description>
+    </key>
     <key type="s" name="panel-sizes">
       <default>'{}'</default>
       <summary>Panel sizes</summary>
       <description>Sizes of panels, in pixels.</description>
+    </key>
+    <key type="s" name="panel-sizes-default">
+      <default>''</default>
+      <summary>Default panel size</summary>
+      <description>Default panel size for new monitors.</description>
     </key>
     <key type="i" name="panel-size">
       <default>48</default>

@@ -93,20 +93,59 @@ export function setSettingsJson(settings, setting, value) {
   }
 }
 
+function getSettingForKeys(settings, keys) {
+  for (let key of keys) {
+    if (
+      key !== undefined &&
+      key !== null &&
+      Object.prototype.hasOwnProperty.call(settings, key)
+    )
+      return settings[key]
+  }
+}
+
+function getMonitorSettingDefault(settings, settingName) {
+  let defaultSetting = settings.get_string(`${settingName}-default`)
+
+  if (!defaultSetting) return
+
+  try {
+    return JSON.parse(defaultSetting)
+  } catch (e) {
+    console.log(
+      `Error parsing default monitor setting ${settingName}: ${e.message}`,
+    )
+  }
+}
+
+export function setMonitorSettingDefault(settings, settingName, value) {
+  try {
+    settings.set_string(`${settingName}-default`, JSON.stringify(value))
+  } catch (e) {
+    console.log(
+      `Error serializing default monitor setting ${settingName}: ${e.message}`,
+    )
+  }
+}
+
 // Previously, the monitor index was used as an id to persist per monitor
 // settings. Since these indexes are unreliable AF, switch to use the monitor
 // serial as its id while keeping it backward compatible.
 function getMonitorSetting(settings, settingName, monitorIndex, fallback) {
   let monitorId = monitorIndexToId[monitorIndex]
+  let currentMonitorId = availableMonitors[monitorIndex]?.id
+  let monitorSettings = getSettingsJson(settings, settingName) || {}
+  let monitorSetting = getSettingForKeys(monitorSettings, [
+    monitorId,
+    monitorIndex,
+    currentMonitorId,
+  ])
 
-  settings = getSettingsJson(settings, settingName)
+  if (monitorSetting !== undefined) return monitorSetting
 
-  return (
-    settings[monitorId] ||
-    settings[monitorIndex] ||
-    settings[availableMonitors[monitorIndex]?.id] ||
-    fallback
-  )
+  monitorSetting = getMonitorSettingDefault(settings, settingName)
+
+  return monitorSetting !== undefined ? monitorSetting : fallback
 }
 
 function setMonitorSetting(settings, settingName, monitorIndex, value) {

@@ -276,6 +276,36 @@ const Preferences = class {
     return PanelSettings.getPanelPosition(this._settings, monitorIndex)
   }
 
+  _savePanelSettingsDefaults(monitorIndex = this._currentMonitorIndex) {
+    if (!this.monitors[monitorIndex]) return
+
+    PanelSettings.setMonitorSettingDefault(
+      this._settings,
+      'panel-anchors',
+      PanelSettings.getPanelAnchor(this._settings, monitorIndex),
+    )
+    PanelSettings.setMonitorSettingDefault(
+      this._settings,
+      'panel-element-positions',
+      PanelSettings.getPanelElementPositions(this._settings, monitorIndex),
+    )
+    PanelSettings.setMonitorSettingDefault(
+      this._settings,
+      'panel-lengths',
+      PanelSettings.getPanelLength(this._settings, monitorIndex),
+    )
+    PanelSettings.setMonitorSettingDefault(
+      this._settings,
+      'panel-positions',
+      PanelSettings.getPanelPosition(this._settings, monitorIndex),
+    )
+    PanelSettings.setMonitorSettingDefault(
+      this._settings,
+      'panel-sizes',
+      PanelSettings.getPanelSize(this._settings, monitorIndex),
+    )
+  }
+
   _setPanelPosition(position) {
     const monitorSync = this._settings.get_boolean(
       'panel-element-positions-monitors-sync',
@@ -286,6 +316,13 @@ const Preferences = class {
     monitorsToSetFor.forEach((monitorIndex) => {
       PanelSettings.setPanelPosition(this._settings, monitorIndex, position)
     })
+    if (monitorSync)
+      PanelSettings.setMonitorSettingDefault(
+        this._settings,
+        'panel-positions',
+        position,
+      )
+
     this._setAnchorLabels(this._currentMonitorIndex)
   }
 
@@ -469,6 +506,12 @@ const Preferences = class {
           newPanelElementPositions,
         ),
       )
+      if (monitorSync)
+        PanelSettings.setMonitorSettingDefault(
+          this._settings,
+          'panel-element-positions',
+          newPanelElementPositions,
+        )
     }
 
     labels[Pos.SHOW_APPS_BTN] = _('Show Applications button')
@@ -1147,6 +1190,12 @@ const Preferences = class {
     this._settings.connect(
       'changed::panel-element-positions-monitors-sync',
       () => {
+        if (
+          this._settings.get_boolean('panel-element-positions-monitors-sync')
+        ) {
+          this._savePanelSettingsDefaults()
+        }
+
         // The anchor combo box may has different labels for single- or all-monitor configuration.
         this._setAnchorLabels(this._currentMonitorIndex)
       },
@@ -1204,6 +1253,12 @@ const Preferences = class {
       monitorsToSetFor.forEach((monitorIndex) => {
         PanelSettings.setPanelLength(this._settings, monitorIndex, value)
       })
+      if (monitorSync)
+        PanelSettings.setMonitorSettingDefault(
+          this._settings,
+          'panel-lengths',
+          value,
+        )
 
       maybeSetPanelLengthScaleValueChange(value)
       this._setPanelLenghtWidgetSensitivity(value)
@@ -1243,6 +1298,12 @@ const Preferences = class {
           monitorsToSetFor.forEach((monitorIndex) => {
             PanelSettings.setPanelAnchor(this._settings, monitorIndex, value)
           })
+          if (monitorSync)
+            PanelSettings.setMonitorSettingDefault(
+              this._settings,
+              'panel-anchors',
+              value,
+            )
         }
       })
 
@@ -3343,6 +3404,12 @@ const Preferences = class {
           monitorsToSetFor.forEach((monitorIndex) => {
             PanelSettings.setPanelSize(this._settings, monitorIndex, value)
           })
+          if (monitorSync)
+            PanelSettings.setMonitorSettingDefault(
+              this._settings,
+              'panel-sizes',
+              value,
+            )
         },
       },
       panelLengthScale,

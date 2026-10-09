@@ -25,7 +25,7 @@
                 <property name="halign">center</property>
                 <property name="label" translatable="yes">GitHub</property>
                 <property name="receives-default">True</property>
-                <property name="uri">https://github.com/home-sweet-gnome/dash-to-panel</property>
+                <property name="uri">https://github.com/tiagosantosvdl/dash-to-panel</property>
               </object>
             </child>
           </object>

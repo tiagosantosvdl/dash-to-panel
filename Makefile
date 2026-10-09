@@ -1,6 +1,6 @@
 # Basic Makefile
 
-UUID = dash-to-panel@jderose9.github.com
+UUID = dash-to-panel@tiagosantosvdl.github.com
 MODULES = src/*.js src/stylesheet.css metadata.json COPYING README.md
 UI_MODULES = ui/*.ui
 IMAGES = ./* ../media/design/svg/dash-to-panel-logo-light.svg
@@ -15,12 +15,11 @@ else
 	INSTALLBASE = $(DESTDIR)/usr/share/gnome-shell/extensions
 	SHARE_PREFIX = $(DESTDIR)/usr/share
 endif
-INSTALLNAME = dash-to-panel@jderose9.github.com
+INSTALLNAME = $(UUID)
 
-# The command line passed variable VERSION is used to set the version string
-# in the metadata and in the generated zip-file. If no VERSION is passed, the
-# version is pulled from the latest git tag and the current commit SHA1 is
-# added to the metadata
+# VERSION is the integer GNOME extension version, defaulting to metadata.json.
+# Human-readable release versions (such as 74.1) use version-name instead.
+# Development builds also record the current commit SHA1.
 ifdef VERSION
     ifdef TARGET
 		FILESUFFIX = _v$(VERSION)_$(TARGET)
@@ -28,8 +27,7 @@ ifdef VERSION
 		FILESUFFIX = _v$(VERSION)
 	endif
 else
-	LATEST_TAG = $(shell git describe --match "v[0-9]*" --abbrev=0 --tags HEAD)
-	VERSION = $(LATEST_TAG:v%=%)
+	VERSION = $(shell python3 -c 'import json; print(json.load(open("metadata.json"))["version"])')
 	COMMIT = $(shell git rev-parse HEAD)
 	FILESUFFIX =
 endif
@@ -111,3 +109,8 @@ ifneq ($(and $(COMMIT),$(VERSION)),)
 else ifneq ($(VERSION),)
 	sed -i 's/"version": [[:digit:]][[:digit:]]*/"version": $(VERSION)/'  _build/metadata.json;
 endif
+
+# Versioned extension ZIP, Debian package, and checksums without installing.
+.PHONY: release _build
+release: _build
+	python3 scripts/package-release.py --build-dir _build

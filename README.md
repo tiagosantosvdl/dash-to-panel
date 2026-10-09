@@ -13,6 +13,12 @@
 
 ![](media/design/png/dtp-main-p2.png)
 
+### About this fork
+
+This is [@tiagosantosvdl's fork](https://github.com/tiagosantosvdl/dash-to-panel) of [Dash to Panel](https://github.com/home-sweet-gnome/dash-to-panel), maintained with Codex. Report issues specific to this fork in [this repository's issue tracker](https://github.com/tiagosantosvdl/dash-to-panel/issues).
+
+The fork uses the extension UUID `dash-to-panel@tiagosantosvdl.github.com`. It shares the original Dash to Panel settings schema and saved preferences.
+
 ### Introduction
 
 Dash to Panel is an icon taskbar for Gnome Shell. This extension moves the dash into the gnome main panel so that the application launchers and system tray are combined into a single panel, similar to that found in KDE Plasma and Windows 7+. A separate dock is no longer needed for easy access to running and favorited applications. 
@@ -100,10 +106,45 @@ Beyond that, just about every aspect of the panel is fully customizable. From po
 
 ### Installation
 
-**To install the most recent official release:
-[Visit Dash-to-Panel at GNOME Extensions](https://extensions.gnome.org/extension/1160/dash-to-panel/)**
+To install this fork from the repository, run:
 
-To install a development version from source, please see the [Installation wiki page](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Installation).
+```sh
+make install
+```
+
+Restart GNOME Shell (log out and back in on Wayland), then enable `dash-to-panel@tiagosantosvdl.github.com`. Disable the upstream Dash to Panel extension before enabling this fork.
+
+For build prerequisites, see the [upstream Installation wiki page](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Installation). The [GNOME Extensions listing](https://extensions.gnome.org/extension/1160/dash-to-panel/) installs the upstream release.
+
+### Releases
+
+This fork's release version is **74.1**, a minor bump from upstream v74. `metadata.json` uses `version-name` for this release version and keeps GNOME's integer `version` at `74`.
+
+The release workflow follows the packaging approach used by [Forge](https://github.com/tiagosantosvdl/forge). Pushing a tag matching `version-name`, such as `v74.1`, builds the packages and publishes a GitHub Release. Publishing a release manually also builds and attaches packages. **Run workflow** accepts a Git ref and creates downloadable artifacts without publishing a release. Prereleases such as `v74.1-rc.1` are supported; their `version-name` must use a space instead of the hyphen (`74.1 rc.1`).
+
+Build the packages locally with:
+
+```sh
+sudo apt install gettext libglib2.0-bin make python3 dpkg-dev
+make release
+```
+
+The build creates:
+
+- `dist/dash-to-panel@tiagosantosvdl.github.com-74.1.zip`, in GNOME's extension archive format, with metadata at the archive root.
+- `dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.1_all.deb`, for system-wide installation on supported GNOME Shell versions (46–51).
+- `dist/SHA256SUMS`, for verification with `cd dist && sha256sum -c SHA256SUMS`.
+
+Install the ZIP for your user with `gnome-extensions install --force ./dist/dash-to-panel@tiagosantosvdl.github.com-74.1.zip`, or install the Debian package with `sudo apt install ./dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.1_all.deb`. The Debian package installs under `/usr/share/gnome-shell/extensions/dash-to-panel@tiagosantosvdl.github.com/`. Restart GNOME Shell and enable the fork as described above.
+
+To publish this release, commit the changes and push a matching tag:
+
+```sh
+git tag -a v74.1 -m "Dash to Panel 74.1"
+git push origin master v74.1
+```
+
+For later releases, update `version-name` in `metadata.json` before tagging. Keep `version` as an integer; it remains `74` for this release.
 
 ## 
 ### FAQ
@@ -144,7 +185,7 @@ This extension could be even better with your help! Any items in the issue track
 ## 
 ### Credits
 
-This extension is developed and maintained by [@jderose9](https://github.com/jderose9) and [@charlesg99](https://github.com/charlesg99).
+This fork is maintained by [@tiagosantosvdl](https://github.com/tiagosantosvdl) with Codex. The upstream extension is developed and maintained by [@jderose9](https://github.com/jderose9) and [@charlesg99](https://github.com/charlesg99).
 
 Significant portions of code in this extension were derived from [Dash-to-Dock](https://micheleg.github.io/dash-to-dock/index.html).
 
@@ -193,6 +234,6 @@ Ideas for recursing child actors and assigning inline styles are based on code f
 ## 
 ### License & Terms ![](media/design/png/copyleft-16.png)
 
-Dash to Panel is available under the terms of the GPL-v2 or later license See [`COPYING`](https://github.com/home-sweet-gnome/dash-to-panel/blob/master/COPYING) for details.
+Dash to Panel is available under the terms of the GPL-v2 or later license. See [`COPYING`](COPYING) for details.
 
 ![](https://img.shields.io/badge/Language-JavaScript-yellow.svg) ![](https://img.shields.io/badge/Licence-GPL--2.0-blue.svg)
