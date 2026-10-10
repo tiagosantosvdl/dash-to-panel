@@ -78,20 +78,14 @@ export const PanelStyle = class {
         operation.compareFn = function (actor) {
           let parent = actor.get_parent()
           return (
-            (parent &&
-              parent.has_style_class_name &&
-              parent.has_style_class_name('panel-button') &&
-              !parent.has_style_class_name('clock-display')) ||
-            (actor.has_style_class_name && actor.has_style_class_name('clock'))
+            parent &&
+            parent.has_style_class_name &&
+            parent.has_style_class_name('panel-button')
           )
         }
       } else {
         trayPaddingStyleLine = '-natural-hpadding: %dpx'.format(trayPadding)
-        if (trayPadding < 6) {
-          trayPaddingStyleLine += '; -minimum-hpadding: %dpx'.format(
-            trayPadding,
-          )
-        }
+        trayPaddingStyleLine += '; -minimum-hpadding: %dpx'.format(trayPadding)
 
         operation.compareFn = function (actor) {
           return (
@@ -110,18 +104,28 @@ export const PanelStyle = class {
 
     let statusIconPadding = SETTINGS.get_int('status-icon-padding')
     if (statusIconPadding >= 0) {
-      let statusIconPaddingStyleLine = paddingStyle.format(statusIconPadding)
+      let statusIconPaddingStyleLine =
+        paddingStyle.format(statusIconPadding) + '; margin: 0'
       let operation = {}
       operation.compareFn = function (actor) {
         return (
           actor.has_style_class_name &&
-          actor.has_style_class_name('system-status-icon')
+          (actor.has_style_class_name('system-status-icon') ||
+            actor.has_style_class_name('messages-indicator'))
         )
       }
       operation.applyFn = (actor, operationIdx) => {
         this._overrideStyle(actor, statusIconPaddingStyleLine, operationIdx)
       }
       this._rightBoxOperations.push(operation)
+
+      this._rightBoxOperations.push({
+        compareFn: (actor) =>
+          actor.has_style_class_name &&
+          actor.has_style_class_name('panel-status-indicators-box'),
+        applyFn: (actor, operationIdx) =>
+          this._overrideStyle(actor, 'spacing: 0', operationIdx),
+      })
     }
 
     let trayContentSize = SETTINGS.get_int('tray-size')

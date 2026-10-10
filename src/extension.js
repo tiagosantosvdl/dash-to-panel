@@ -209,15 +209,18 @@ export default class DashToPanelExtension extends Extension {
   enableGlobalStyles() {
     let globalBorderRadius = SETTINGS.get_int('global-border-radius')
 
-    if (globalBorderRadius)
-      Main.layoutManager.uiGroup.add_style_class_name(
-        `br${globalBorderRadius * 4}`,
-      )
+    Main.layoutManager.uiGroup.add_style_class_name(
+      `br${globalBorderRadius * 4}`,
+    )
+    Main.layoutManager.uiGroup.add_style_class_name(
+      `tray-br${SETTINGS.get_int('tray-border-radius') * 4}`,
+    )
   }
 
   disableGlobalStyles() {
-    ;['br4', 'br8', 'br12', 'br16', 'br20'].forEach((c) =>
-      Main.layoutManager.uiGroup.remove_style_class_name(c),
-    )
+    ;[0, 4, 8, 12, 16, 20].forEach((radius) => {
+      Main.layoutManager.uiGroup.remove_style_class_name(`br${radius}`)
+      Main.layoutManager.uiGroup.remove_style_class_name(`tray-br${radius}`)
+    })
   }
 }

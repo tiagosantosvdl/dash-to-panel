@@ -234,7 +234,7 @@ export const PanelManager = class {
     this._signalsHandler.add(
       [
         SETTINGS,
-        'changed::global-border-radius',
+        ['changed::global-border-radius', 'changed::tray-border-radius'],
         () => DTP_EXTENSION.resetGlobalStyles(),
       ],
       [

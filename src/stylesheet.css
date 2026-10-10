@@ -105,6 +105,42 @@
 	-minimum-hpadding: 0;
 }
 
+/* Let extension padding settings control spacing instead of theme borders. */
+#uiGroup .dashtopanelMainPanel .panel-button {
+	border: none !important;
+	margin: 0;
+	padding: 0;
+}
+
+/* Use one full-button highlight for the clock, tray, and other panel buttons. */
+#uiGroup .dashtopanelMainPanel .panel-button {
+	background-color: transparent !important;
+	box-shadow: none !important;
+}
+
+#uiGroup .dashtopanelMainPanel .panel-button:hover,
+#uiGroup .dashtopanelMainPanel .panel-button:focus {
+	background-color: rgba(255, 255, 255, 0.17) !important;
+}
+
+#uiGroup .dashtopanelMainPanel .panel-button:active,
+#uiGroup .dashtopanelMainPanel .panel-button:checked {
+	background-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+#uiGroup .dashtopanelMainPanel .panel-button:active:hover,
+#uiGroup .dashtopanelMainPanel .panel-button:checked:hover {
+	background-color: rgba(255, 255, 255, 0.32) !important;
+}
+
+#uiGroup .dashtopanelMainPanel .panel-button.clock-display .clock {
+	background: none !important;
+	box-shadow: none !important;
+	border: none !important;
+	margin: 0;
+	padding: 0;
+}
+
 #dashtopanelThumbnailList {
 	spacing: 0em;
 	padding: 0 1em;
@@ -170,103 +206,58 @@
 }
 
 
-/* border radius, grrr no css variables in ST */
-#uiGroup.br4 .dashtopanelPanel.dock,
-#uiGroup.br4 .dashtopanelPanel.dock .dashtopanelMainPanel,
-#uiGroup.br4 .show-apps,
+/* Window and tray radii are independent; St has no CSS variables. */
+
+#uiGroup.br0 .dtp-container,
+#uiGroup.br0 .dtp-dots-container {
+	border-radius: 0px !important;
+}
+
+#uiGroup.tray-br0 .dashtopanelMainPanel .panel-button {
+	border-radius: 0px !important;
+}
+
 #uiGroup.br4 .dtp-container,
-#uiGroup.br4 .dtp-dots-container,
-#uiGroup.br4 #preview-menu, 
-#uiGroup.br4 #preview-menu .preview-header-box,
-#uiGroup.br4 #preview-menu .preview-container,
-#uiGroup.br4 #preview-menu .preview-close-btn-container { 
+#uiGroup.br4 .dtp-dots-container {
 	border-radius: 4px !important;
-	overflow: hidden !important;
-}
-#uiGroup.br4 .dashtopanelPanel.dock .showdesktop-button { 
-	border-radius: 0 4px 4px 0 !important;
 }
 
-#uiGroup.br4 .dashtopanelPanel.dock .showdesktop-button-vertical {
-	border-radius: 0 0 4px 4px !important;
+#uiGroup.tray-br4 .dashtopanelMainPanel .panel-button {
+	border-radius: 4px !important;
 }
 
-#uiGroup.br8 .dashtopanelPanel.dock,
-#uiGroup.br8 .dashtopanelPanel.dock .dashtopanelMainPanel,
-#uiGroup.br8 .show-apps,
 #uiGroup.br8 .dtp-container,
-#uiGroup.br8 .dtp-dots-container,
-#uiGroup.br8 #preview-menu, 
-#uiGroup.br8 #preview-menu .preview-header-box,
-#uiGroup.br8 #preview-menu .preview-container,
-#uiGroup.br8 #preview-menu .preview-close-btn-container { 
+#uiGroup.br8 .dtp-dots-container {
 	border-radius: 8px !important;
-	overflow: hidden !important;
-}
-#uiGroup.br8 .dashtopanelPanel.dock .showdesktop-button { 
-	border-radius: 0 8px 8px 0 !important;
 }
 
-#uiGroup.br8 .dashtopanelPanel.dock .showdesktop-button-vertical {
-	border-radius: 0 0 8px 8px !important;
+#uiGroup.tray-br8 .dashtopanelMainPanel .panel-button {
+	border-radius: 8px !important;
 }
 
-#uiGroup.br12 .dashtopanelPanel.dock,
-#uiGroup.br12 .dashtopanelPanel.dock .dashtopanelMainPanel,
-#uiGroup.br12 .show-apps,
 #uiGroup.br12 .dtp-container,
-#uiGroup.br12 .dtp-dots-container,
-#uiGroup.br12 #preview-menu, 
-#uiGroup.br12 #preview-menu .preview-header-box,
-#uiGroup.br12 #preview-menu .preview-container,
-#uiGroup.br12 #preview-menu .preview-close-btn-container { 
+#uiGroup.br12 .dtp-dots-container {
 	border-radius: 12px !important;
-	overflow: hidden !important;
-}
-#uiGroup.br12 .dashtopanelPanel.dock .showdesktop-button { 
-	border-radius: 0 12px 12px 0 !important;
 }
 
-#uiGroup.br12 .dashtopanelPanel.dock .showdesktop-button-vertical {
-	border-radius: 0 0 12px 12px !important;
+#uiGroup.tray-br12 .dashtopanelMainPanel .panel-button {
+	border-radius: 12px !important;
 }
 
-#uiGroup.br16 .dashtopanelPanel.dock,
-#uiGroup.br16 .dashtopanelPanel.dock .dashtopanelMainPanel,
-#uiGroup.br16 .show-apps,
 #uiGroup.br16 .dtp-container,
-#uiGroup.br16 .dtp-dots-container,
-#uiGroup.br16 #preview-menu, 
-#uiGroup.br16 #preview-menu .preview-header-box,
-#uiGroup.br16 #preview-menu .preview-container,
-#uiGroup.br16 #preview-menu .preview-close-btn-container { 
+#uiGroup.br16 .dtp-dots-container {
 	border-radius: 16px !important;
-	overflow: hidden !important;
-}
-#uiGroup.br16 .dashtopanelPanel.dock .showdesktop-button { 
-	border-radius: 0 16px 16px 0 !important;
 }
 
-#uiGroup.br16 .dashtopanelPanel.dock .showdesktop-button-vertical {
-	border-radius: 0 0 16px 16px !important;
+#uiGroup.tray-br16 .dashtopanelMainPanel .panel-button {
+	border-radius: 16px !important;
 }
 
-#uiGroup.br20 .dashtopanelPanel.dock,
-#uiGroup.br20 .dashtopanelPanel.dock .dashtopanelMainPanel,
-#uiGroup.br20 .show-apps,
 #uiGroup.br20 .dtp-container,
-#uiGroup.br20 .dtp-dots-container,
-#uiGroup.br20 #preview-menu, 
-#uiGroup.br20 #preview-menu .preview-header-box,
-#uiGroup.br20 #preview-menu .preview-container,
-#uiGroup.br20 #preview-menu .preview-close-btn-container { 
+#uiGroup.br20 .dtp-dots-container {
 	border-radius: 20px !important;
-	overflow: hidden !important;
-}
-#uiGroup.br20 .dashtopanelPanel.dock .showdesktop-button { 
-	border-radius: 0 20px 20px 0 !important;
 }
 
-#uiGroup.br20 .dashtopanelPanel.dock .showdesktop-button-vertical {
-	border-radius: 0 0 20px 20px !important;
+#uiGroup.tray-br20 .dashtopanelMainPanel .panel-button {
+	border-radius: 20px !important;
 }

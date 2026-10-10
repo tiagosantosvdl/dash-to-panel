@@ -3431,6 +3431,12 @@ const Preferences = class {
         rangeFactor: 4,
       },
       {
+        objectName: 'tray_border_radius_scale',
+        valueName: 'tray-border-radius',
+        range: [5, 4, 3, 2, 1, 0],
+        rangeFactor: 4,
+      },
+      {
         objectName: 'appicon_margin_scale',
         valueName: 'appicon-margin',
         range: DEFAULT_MARGIN_SIZES,
