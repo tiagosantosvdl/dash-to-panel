@@ -240,12 +240,27 @@ export function setPanelAnchor(settings, monitorIndex, value) {
 }
 
 export function getPanelElementPositions(settings, monitorIndex) {
-  return getMonitorSetting(
+  const positions = getMonitorSetting(
     settings,
     'panel-element-positions',
     monitorIndex,
     Pos.defaults,
   )
+
+  // Older saved layouts (including imported and new-monitor defaults) predate
+  // the independently positioned workspace selector. Preserve their ordering.
+  if (positions.some((pos) => pos.element === Pos.WORKSPACE_SELECTOR))
+    return positions
+
+  const updated = positions.map((pos) => ({ ...pos }))
+  const trayIndex = updated.findIndex((pos) => pos.element === Pos.RIGHT_BOX)
+  const selector = {
+    element: Pos.WORKSPACE_SELECTOR,
+    visible: true,
+    position: trayIndex >= 0 ? updated[trayIndex].position : Pos.STACKED_BR,
+  }
+  updated.splice(trayIndex >= 0 ? trayIndex : updated.length, 0, selector)
+  return updated
 }
 
 export function setPanelElementPositions(settings, monitorIndex, value) {

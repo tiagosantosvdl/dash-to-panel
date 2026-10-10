@@ -44,6 +44,7 @@ jobs:
             node --check "$source"
           done
           glib-compile-schemas --strict --dry-run schemas
+          node --experimental-vm-modules tests/workspace_selector_test.mjs
           python3 -m unittest discover -s tests -p '*test.py'
 
       - name: Check release version

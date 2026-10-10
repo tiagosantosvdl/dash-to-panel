@@ -93,7 +93,7 @@
     <key name="panel-element-positions" type="s">
       <default>'{}'</default>
       <summary>Panel element positions</summary>
-      <description>Panel element positions (JSON).</description>
+      <description>Panel element order, visibility and alignment (JSON), including the workspaceSelector element for the Workspace Indicator extension.</description>
     </key>
     <key name="panel-element-positions-default" type="s">
       <default>''</default>

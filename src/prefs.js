@@ -522,6 +522,7 @@ const Preferences = class {
     labels[Pos.LEFT_BOX] = _('Left box')
     labels[Pos.CENTER_BOX] = _('Center box')
     labels[Pos.RIGHT_BOX] = _('Right box')
+    labels[Pos.WORKSPACE_SELECTOR] = _('Workspace selector')
     labels[Pos.DESKTOP_BTN] = _('Desktop button')
 
     panelElementPositions.forEach((el) => {

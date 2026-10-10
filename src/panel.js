@@ -196,6 +196,14 @@ export const Panel = GObject.registerClass(
 
       this.geom = this.getGeometry()
 
+      // Keep the external Workspace Indicator separate from the tray. An empty
+      // box occupies no space when that extension is disabled or unavailable.
+      this._workspaceSelectorBox = Utils.createBoxLayout({
+        name: 'workspaceSelector',
+      })
+      this.panel.add_child(this._workspaceSelectorBox)
+      this._syncWorkspaceSelector()
+
       // Create a wrapper around the real showAppsIcon in order to add a popupMenu. Most of
       // its behavior is handled by the taskbar, but its positioning is done at the panel level
       this.showAppsIconWrapper = new AppIcons.ShowAppsIconWrapper(this)
@@ -359,6 +367,11 @@ export const Panel = GObject.registerClass(
           },
         ],
         [
+          this._leftBox,
+          'child-added',
+          () => this._onBoxActorAdded(this._leftBox),
+        ],
+        [
           this._centerBox,
           'child-added',
           () => this._onBoxActorAdded(this._centerBox),
@@ -417,6 +430,11 @@ export const Panel = GObject.registerClass(
 
       this._timeoutsHandler.destroy()
       this._signalsHandler.destroy()
+
+      if (this._workspaceSelectorSyncId) {
+        GLib.source_remove(this._workspaceSelectorSyncId)
+        this._workspaceSelectorSyncId = 0
+      }
 
       if (this._waitResetGeomId) {
         GLib.source_remove(this._waitResetGeomId)
@@ -512,6 +530,9 @@ export const Panel = GObject.registerClass(
         this._removePanelMenu(systemMenuName)
         this._removePanelMenu('activities')
       }
+
+      this._restoreWorkspaceSelector()
+      this._workspaceSelectorBox.destroy()
 
       Main.ctrlAltTabManager.removeGroup(this)
     }
@@ -910,6 +931,7 @@ export const Panel = GObject.registerClass(
         this.statusArea[Utils.getSystemMenuInfo().name].container,
       )
       setMap(Pos.RIGHT_BOX, this._rightBox)
+      setMap(Pos.WORKSPACE_SELECTOR, this._workspaceSelectorBox)
       setMap(Pos.DESKTOP_BTN, this._showDesktopButton)
     }
 
@@ -1312,14 +1334,70 @@ export const Panel = GObject.registerClass(
     }
 
     _onBoxActorAdded(box) {
+      // addToStatusArea may still be registering the indicator when child-added
+      // fires. Wait until it has finished before looking up its role.
+      if (!this.isStandalone && !this._workspaceSelectorSyncId) {
+        this._workspaceSelectorSyncId = GLib.idle_add(
+          GLib.PRIORITY_DEFAULT_IDLE,
+          () => {
+            this._workspaceSelectorSyncId = 0
+            this._syncWorkspaceSelector()
+            return GLib.SOURCE_REMOVE
+          },
+        )
+      }
       if (this.geom.vertical) {
         this._setVertical(box, true)
       }
     }
 
+    _syncWorkspaceSelector() {
+      const container = this.statusArea['workspace-indicator']?.container
+      if (!container || container === this._workspaceSelectorContainer) return
+
+      this._restoreWorkspaceSelector()
+      const parent = container.get_parent()
+      if (!parent) return
+
+      this._workspaceSelectorContainer = container
+      this._workspaceSelectorOriginalParent = parent
+      this._workspaceSelectorOriginalIndex = parent
+        .get_children()
+        .indexOf(container)
+      this._workspaceSelectorDestroyId = container.connect('destroy', () => {
+        this._workspaceSelectorContainer = null
+        this._workspaceSelectorOriginalParent = null
+        this._workspaceSelectorDestroyId = 0
+      })
+      parent.remove_child(container)
+      this._workspaceSelectorBox.add_child(container)
+      this._setVertical(this._workspaceSelectorBox, this.geom.vertical)
+    }
+
+    _restoreWorkspaceSelector() {
+      const container = this._workspaceSelectorContainer
+      if (!container) return
+
+      container.disconnect(this._workspaceSelectorDestroyId)
+      const parent = container.get_parent()
+      if (parent) parent.remove_child(container)
+      this._setVertical(container, false)
+      this._workspaceSelectorOriginalParent.insert_child_at_index(
+        container,
+        Math.min(
+          this._workspaceSelectorOriginalIndex,
+          this._workspaceSelectorOriginalParent.get_n_children(),
+        ),
+      )
+      this._workspaceSelectorContainer = null
+      this._workspaceSelectorOriginalParent = null
+      this._workspaceSelectorDestroyId = 0
+    }
+
     _refreshVerticalAlloc() {
       this._setVertical(this._centerBox, true)
       this._setVertical(this._rightBox, true)
+      this._setVertical(this._workspaceSelectorBox, true)
       this._formatVerticalClock()
     }
 

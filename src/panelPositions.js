@@ -23,6 +23,7 @@ export const SYSTEM_MENU = 'systemMenu'
 export const LEFT_BOX = 'leftBox'
 export const CENTER_BOX = 'centerBox'
 export const RIGHT_BOX = 'rightBox'
+export const WORKSPACE_SELECTOR = 'workspaceSelector'
 export const DESKTOP_BTN = 'desktopButton'
 
 export const STACKED_TL = 'stackedTL'
@@ -45,6 +46,7 @@ export const defaults = [
   { element: LEFT_BOX, visible: true, position: STACKED_TL },
   { element: TASKBAR, visible: true, position: STACKED_TL },
   { element: CENTER_BOX, visible: true, position: STACKED_BR },
+  { element: WORKSPACE_SELECTOR, visible: true, position: STACKED_BR },
   { element: RIGHT_BOX, visible: true, position: STACKED_BR },
   { element: DATE_MENU, visible: true, position: STACKED_BR },
   { element: SYSTEM_MENU, visible: true, position: STACKED_BR },

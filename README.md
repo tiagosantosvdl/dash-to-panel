@@ -118,9 +118,9 @@ For build prerequisites, see the [upstream Installation wiki page](https://githu
 
 ### Releases
 
-This fork's release version is **74.1.1**, a minor bump from upstream v74. `metadata.json` uses `version-name` for this release version and keeps GNOME's integer `version` at `74`.
+This fork's release version is **74.2.0**, a minor bump from upstream v74. `metadata.json` uses `version-name` for this release version and keeps GNOME's integer `version` at `74`.
 
-The release workflow follows the packaging approach used by [Forge](https://github.com/tiagosantosvdl/forge). Pushing a tag matching `version-name`, such as `v74.1.1`, builds the packages and publishes a GitHub Release. Publishing a release manually also builds and attaches packages. **Run workflow** accepts a Git ref and creates downloadable artifacts without publishing a release. Prereleases such as `v74.1.1-rc.1` are supported; their `version-name` must use a space instead of the hyphen (`74.1.1 rc.1`).
+The release workflow follows the packaging approach used by [Forge](https://github.com/tiagosantosvdl/forge). Pushing a tag matching `version-name`, such as `v74.2.0`, builds the packages and publishes a GitHub Release. Publishing a release manually also builds and attaches packages. **Run workflow** accepts a Git ref and creates downloadable artifacts without publishing a release. Prereleases such as `v74.2.0-rc.1` are supported; their `version-name` must use a space instead of the hyphen (`74.2.0 rc.1`).
 
 Build the packages locally with:
 
@@ -133,17 +133,17 @@ The build creates:
 
 Release filenames follow the same convention across these extensions: `<uuid>-<version>.zip`, `gnome-shell-extension-<name>-tiagosantosvdl_<debian-version>_all.deb`, and `SHA256SUMS`. Debian prerelease versions use `~rc.1` where ZIP versions use `-rc.1`.
 
-- `dist/dash-to-panel@tiagosantosvdl.github.com-74.1.1.zip`, in GNOME's extension archive format, with metadata at the archive root.
-- `dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.1.1_all.deb`, for system-wide installation on supported GNOME Shell versions (46–51).
+- `dist/dash-to-panel@tiagosantosvdl.github.com-74.2.0.zip`, in GNOME's extension archive format, with metadata at the archive root.
+- `dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.2.0_all.deb`, for system-wide installation on supported GNOME Shell versions (46–51).
 - `dist/SHA256SUMS`, for verification with `cd dist && sha256sum -c SHA256SUMS`.
 
-Install the ZIP for your user with `gnome-extensions install --force ./dist/dash-to-panel@tiagosantosvdl.github.com-74.1.1.zip`, or install the Debian package with `sudo apt install ./dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.1.1_all.deb`. The Debian package installs under `/usr/share/gnome-shell/extensions/dash-to-panel@tiagosantosvdl.github.com/`. Restart GNOME Shell and enable the fork as described above.
+Install the ZIP for your user with `gnome-extensions install --force ./dist/dash-to-panel@tiagosantosvdl.github.com-74.2.0.zip`, or install the Debian package with `sudo apt install ./dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.2.0_all.deb`. The Debian package installs under `/usr/share/gnome-shell/extensions/dash-to-panel@tiagosantosvdl.github.com/`. Restart GNOME Shell and enable the fork as described above.
 
 To publish this release, commit the changes and push a matching tag:
 
 ```sh
-git tag -a v74.1.1 -m "Dash to Panel 74.1.1"
-git push origin master v74.1.1
+git tag -a v74.2.0 -m "Dash to Panel 74.2.0"
+git push origin master v74.2.0
 ```
 
 For later releases, update `version-name` in `metadata.json` before tagging. Keep `version` as an integer; it remains `74` for this release.
@@ -152,6 +152,8 @@ For later releases, update `version-name` in `metadata.json` before tagging. Kee
 ### FAQ
 
 How do I customize the panel? [See the Wiki](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Enable-and-Customize#customize-it)
+
+How do I keep the workspace selector before the tray icons? Enable GNOME's Workspace Indicator extension, then open Dash to Panel settings → Position. Move **Workspace selector** between **Taskbar** and **Right box** in the panel element list. The selector has its own visibility and alignment controls and defaults to immediately before the right box, including in existing saved layouts. This positions the existing indicator on the panel that replaces GNOME's top bar; it does not create additional indicators on other monitors or move it when the original top bar is kept.
 
 How do I embed my bottom left notification drawer into the panel like a system tray? [Top Icons Plus](https://extensions.gnome.org/extension/2311/topicons-plus) or [(K)StatusNotifierItem/AppIndicator Support](https://extensions.gnome.org/extension/615/appindicator-support)
 

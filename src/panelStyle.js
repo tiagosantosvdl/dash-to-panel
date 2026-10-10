@@ -148,6 +148,11 @@ export const PanelStyle = class {
 
       this._overrideStyle(this.panel._rightBox, trayContentSizeStyleLine, 0)
       this._overrideStyle(this.panel._centerBox, trayContentSizeStyleLine, 0)
+      this._overrideStyle(
+        this.panel._workspaceSelectorBox,
+        trayContentSizeStyleLine,
+        0,
+      )
     }
 
     // center box has been moved next to the right box and will be treated the same
@@ -230,6 +235,13 @@ export const PanelStyle = class {
           this._recursiveApply(actor, this._leftBoxOperations)
       },
     )
+    this._workspaceSelectorActorAddedID =
+      this.panel._workspaceSelectorBox.connect('child-added', (box, actor) => {
+        if (this._rightBoxOperations.length && !this._ignoreAddedChild)
+          this._recursiveApply(actor, this._rightBoxOperations)
+
+        this._ignoreAddedChild = 0
+      })
   }
 
   _removeStyles() {
@@ -240,10 +252,15 @@ export const PanelStyle = class {
       this.panel._centerBox.disconnect(this._centerBoxActorAddedID)
     if (this._leftBoxActorAddedID)
       this.panel._leftBox.disconnect(this._leftBoxActorAddedID)
+    if (this._workspaceSelectorActorAddedID)
+      this.panel._workspaceSelectorBox.disconnect(
+        this._workspaceSelectorActorAddedID,
+      )
 
     this._restoreOriginalStyle(this.panel._rightBox)
     this._restoreOriginalStyle(this.panel._centerBox)
     this._restoreOriginalStyle(this.panel._leftBox)
+    this._restoreOriginalStyle(this.panel._workspaceSelectorBox)
 
     this._applyStylesRecursively(true)
   }
@@ -254,6 +271,7 @@ export const PanelStyle = class {
       // add the system menu as we move it from the rightbox to the panel to position it independently
       let children = this.panel._rightBox
         .get_children()
+        .concat(this.panel._workspaceSelectorBox.get_children())
         .concat([
           this.panel.statusArea[Utils.getSystemMenuInfo().name].container,
         ])
@@ -334,7 +352,11 @@ export const PanelStyle = class {
       }
 
       this._ignoreAddedChild =
-        [this.panel._centerBox, this.panel._rightBox].indexOf(parent) >= 0
+        [
+          this.panel._centerBox,
+          this.panel._rightBox,
+          this.panel._workspaceSelectorBox,
+        ].indexOf(parent) >= 0
 
       parent.remove_child(actor)
       parent.insert_child_at_index(actor, actorIndex)
