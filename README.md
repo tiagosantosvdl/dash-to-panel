@@ -1,205 +1,290 @@
+# Dash to Panel
+
 <p align="left">
-  <img src="/media/design/svg/D2P_logo.svg" width="620"/>
-</p>
-<p align="left">
-    <img src="/media/design/svg/GitHub_logo.svg" width="120"/>&nbsp;
-    <a href="https://extensions.gnome.org/extension/1160/dash-to-panel/" style="margin-left: 20px">
-        <img src="/media/design/svg/Gnome_logo.svg" width="120px"/>
-    </a>&nbsp;
-    <a href="https://www.paypal.com/donate/?hosted_button_id=5DCVELP7BSAVQ">
-        <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" />
-    </a>
+  <img src="media/design/svg/D2P_logo.svg" width="620" alt="Dash to Panel logo" />
 </p>
 
-![](media/design/png/dtp-main-p2.png)
+A GNOME Shell taskbar that combines application launchers, running windows,
+the clock, and system icons in one configurable panel.
 
-### About this fork
+![Dash to Panel desktop](media/design/png/dtp-main-p2.png)
 
-This is [@tiagosantosvdl's fork](https://github.com/tiagosantosvdl/dash-to-panel) of [Dash to Panel](https://github.com/home-sweet-gnome/dash-to-panel), maintained with Codex. Report issues specific to this fork in [this repository's issue tracker](https://github.com/tiagosantosvdl/dash-to-panel/issues).
+## Project status
 
-The fork uses the extension UUID `dash-to-panel@tiagosantosvdl.github.com`. It shares the original Dash to Panel settings schema and saved preferences.
+This is [@tiagosantosvdl's fork](https://github.com/tiagosantosvdl/dash-to-panel)
+of [upstream Dash to Panel](https://github.com/home-sweet-gnome/dash-to-panel),
+maintained using OpenAI Codex. This fork provides its own extension packages.
 
-### Introduction
+- Current version: **74.3.1**, based on upstream v74.
+- Extension UUID: `dash-to-panel@tiagosantosvdl.github.com`.
+- Supported GNOME Shell versions: **46–51**, as declared in
+  [metadata.json](metadata.json). This is not a completed compatibility test matrix.
+- Settings schema: `org.gnome.shell.extensions.dash-to-panel`, shared with
+  upstream to preserve existing preferences.
 
-Dash to Panel is an icon taskbar for Gnome Shell. This extension moves the dash into the gnome main panel so that the application launchers and system tray are combined into a single panel, similar to that found in KDE Plasma and Windows 7+. A separate dock is no longer needed for easy access to running and favorited applications. 
+The fork adds independent workspace-selector positioning, separate window-button
+and tray corner radii, and full-button hover highlights that include the clock's
+notification bell. Version 74.3.1 removes install/update notifications and the
+“See what's new” button.
 
-Beyond that, just about every aspect of the panel is fully customizable. From positioning and scaling panel elements to running indicators to multi-monitor display, to window previews and even intellihide, Dash to Panel has everything you need to make your workspace feel like home.
+Automated checks cover workspace-selector integration, computed panel styles,
+and release packaging. Validate behavior in a running GNOME session separately.
+Rebuilding and installing do not reload code already imported by Shell.
 
-### Features
+## Features
 
-|Customizable appearance|
-|:-----:|
-|![screenshot](media/design/gif/customizable.gif)|
-|Hide & show panel elements and set their positions, sizes & colors|
+- Configurable panel position, size, element order, and multi-monitor display
+- Grouped or separate window buttons, favorites, and custom click actions
+- Running indicators with configurable appearance and position
+- Live window previews, peek behavior, and keyboard application launching
+- Intellihide and dynamic transparency
+- Show Desktop and independent workspace-selector placement
+- Separate border radii for window buttons and tray elements
+- Import and export of saved settings
 
-##
+![Customizable panel appearance](media/design/gif/customizable.gif)
 
-<table>
-    <thead>
-        <tr>
-            <th colspan=2>Customizable running indicators</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td align="center">Metro</td>
-            <td align="center">Ciliora/Dashes</td>
-        </tr> 
-        <tr>
-            <td align="center"><img src="media/design/png/metro.png"/></td>
-            <td align="center"><img src="media/design/png/ciliora-dashes.png"/></td>
-        </tr>
-        <tr>
-            <td align="center">Ciliora</td>
-            <td align="center">Squares/Segmented</td>
-        </tr> 
-        <tr>
-            <td align="center"><img src="media/design/png/ciliora.png"/></td>
-            <td align="center"><img src="media/design/png/squares-segments.png"/></td>
-        </tr>
-        <tr>
-            <td align="center">Dashes</td>
-            <td align="center">Dots/Solid</td>
-        </tr> 
-        <tr>
-            <td align="center"><img src="media/design/png/dashes.png"/></td>
-            <td align="center"><img src="media/design/png/dots-solid.png"/></td>
-        </tr>
-        <tr>
-            <td colspan=2 align="center">Set position, style, weight & color of running indicators to easily and quickly identify focused and unfocused applications</td>
-        </tr>
-    </tbody>
-</table>
+![Live window previews](media/design/gif/previews.gif)
 
-##
+## Installation
 
-|Live Previews on Hover|
-|:-----:|
-|![screenshot](media/design/gif/previews.gif)|
-|Hover over the launcher icon for an open application to get a live window preview|
+Download the packages from this repository's
+[GitHub Releases](https://github.com/tiagosantosvdl/dash-to-panel/releases).
+Each release includes an extension ZIP, a Debian package, and `SHA256SUMS`.
 
-##
-|Launch by Number|
-|:-----:|
-|![](media/design/png/indicators-num.png.png)|
-|Optionally launch your favorite applications via keyboard|
+Disable upstream Dash to Panel before enabling this fork. The fork has a different
+UUID, so installation does not replace upstream automatically. Both use the same
+saved settings. Choose one installation method: a per-user copy takes precedence
+over a system-wide copy with the same UUID.
 
-##
+### Debian / Ubuntu package
 
-|Panel Intellihide|
-|:-----:|
-|![Intellihide](media/design/gif/Intellihide.gif)|
-|Hide and reveal the panel according to your set preferences|
-
-##
-|Additional Features|Feature Implemented|
-|:-----|:-----:|
-|Add "Show Desktop" button to panel|![](media/design/png/done.png)|
-|Isolate running apps by workspaces and/or monitors|![](media/design/png/done.png)|
-|Custom click behaviors (launch new window, cycle open windows, minimize, etc)|![](media/design/png/done.png)|
-|Integrate native Gnome appMenu into right-click secondary menu|![](media/design/png/done.png)|
-|Multi-monitor support|![](media/design/png/done.png)|
-|Dynamic transparency|![](media/design/png/done.png)|
-|Ungroup application windows|![](media/design/png/done.png)|
-|Export and import settings|![](media/design/png/done.png)|
-##
-
-### Installation
-
-To install this fork from the repository, run:
+For release `74.3.1`, install the downloaded package:
 
 ```sh
-make install
+sudo apt install ./gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.3.1_all.deb
 ```
 
-Restart GNOME Shell (log out and back in on Wayland), then enable `dash-to-panel@tiagosantosvdl.github.com`. Disable the upstream Dash to Panel extension before enabling this fork.
+The package declares dependencies on GNOME Shell 46–51 and `gir1.2-adw-1`.
+It installs under
+`/usr/share/gnome-shell/extensions/dash-to-panel@tiagosantosvdl.github.com/`.
 
-For build prerequisites, see the [upstream Installation wiki page](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Installation). The [GNOME Extensions listing](https://extensions.gnome.org/extension/1160/dash-to-panel/) installs the upstream release.
-
-### Releases
-
-This fork's release version is **74.3.1**, a minor bump from upstream v74. `metadata.json` uses `version-name` for this release version and keeps GNOME's integer `version` at `74`.
-
-The release workflow follows the packaging approach used by [Forge](https://github.com/tiagosantosvdl/forge). Pushing a tag matching `version-name`, such as `v74.3.1`, builds the packages and publishes a GitHub Release. Publishing a release manually also builds and attaches packages. **Run workflow** accepts a Git ref and creates downloadable artifacts without publishing a release. Prereleases such as `v74.3.1-rc.1` are supported; their `version-name` must use a space instead of the hyphen (`74.3.1 rc.1`).
-
-Build the packages locally with:
+Log out and back in after installation or an upgrade to load the installed code.
+Enable the extension with:
 
 ```sh
-sudo apt install gettext libglib2.0-bin make python3 dpkg-dev
+gnome-extensions enable dash-to-panel@tiagosantosvdl.github.com
+```
+
+### Per-user ZIP
+
+Install the downloaded ZIP:
+
+```sh
+gnome-extensions install --force ./dash-to-panel@tiagosantosvdl.github.com-74.3.1.zip
+```
+
+Install libadwaita's introspection bindings (`gir1.2-adw-1` on Debian / Ubuntu)
+for preferences. Log out and back in, then enable the extension using the command
+above.
+
+The [GNOME Extensions listing](https://extensions.gnome.org/extension/1160/dash-to-panel/)
+distributes upstream rather than this fork.
+
+### Verify downloads
+
+Place `SHA256SUMS` and both release packages in the same directory, then run:
+
+```sh
+sha256sum -c SHA256SUMS
+```
+
+## Build from source
+
+On Debian / Ubuntu, install the build tools and clone this repository:
+
+```sh
+sudo apt install git gettext libglib2.0-bin make python3 dpkg-dev
+git clone https://github.com/tiagosantosvdl/dash-to-panel.git
+cd dash-to-panel
 make release
 ```
 
-The build creates:
+Building packages stages the extension under `_build/` without installing or
+activating it. For version `74.3.1`, the output is:
 
-Release filenames follow the same convention across these extensions: `<uuid>-<version>.zip`, `gnome-shell-extension-<name>-tiagosantosvdl_<debian-version>_all.deb`, and `SHA256SUMS`. Debian prerelease versions use `~rc.1` where ZIP versions use `-rc.1`.
+- `dist/dash-to-panel@tiagosantosvdl.github.com-74.3.1.zip`
+- `dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.3.1_all.deb`
+- `dist/SHA256SUMS`
 
-- `dist/dash-to-panel@tiagosantosvdl.github.com-74.3.1.zip`, in GNOME's extension archive format, with metadata at the archive root.
-- `dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.3.1_all.deb`, for system-wide installation on supported GNOME Shell versions (46–51).
-- `dist/SHA256SUMS`, for verification with `cd dist && sha256sum -c SHA256SUMS`.
-
-Install the ZIP for your user with `gnome-extensions install --force ./dist/dash-to-panel@tiagosantosvdl.github.com-74.3.1.zip`, or install the Debian package with `sudo apt install ./dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.3.1_all.deb`. The Debian package installs under `/usr/share/gnome-shell/extensions/dash-to-panel@tiagosantosvdl.github.com/`. Restart GNOME Shell and enable the fork as described above.
-
-To publish this release, commit the changes and push a matching tag:
+Verify and install the local Debian build:
 
 ```sh
-git tag -a v74.3.1 -m "Dash to Panel 74.3.1"
-git push origin master v74.3.1
+(cd dist && sha256sum -c SHA256SUMS)
+sudo apt install ./dist/gnome-shell-extension-dash-to-panel-tiagosantosvdl_74.3.1_all.deb
 ```
 
-For later releases, update `version-name` in `metadata.json` before tagging. Keep `version` as an integer; it remains `74` for this release.
+Alternatively, `make install` builds and installs a per-user copy directly from
+the checkout. After either installation method, log out and back in and enable
+the extension as described above.
 
-## 
-### FAQ
+The Makefile's optional `VERSION` variable is an integer GNOME extension-version
+override. The human-readable release version comes from `version-name` in
+`metadata.json`; do not pass `74.3.1` as Makefile `VERSION`.
 
-How do I customize the panel? [See the Wiki](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Enable-and-Customize#customize-it)
+## Configuration and logs
 
-How do I keep the workspace selector before the tray icons? Enable GNOME's Workspace Indicator extension, then open Dash to Panel settings → Position. Move **Workspace selector** between **Taskbar** and **Right box** in the panel element list. The selector has its own visibility and alignment controls and defaults to immediately before the right box, including in existing saved layouts. This positions the existing indicator on the panel that replaces GNOME's top bar; it does not create additional indicators on other monitors or move it when the original top bar is kept.
+Open preferences with:
 
-How do I embed my bottom left notification drawer into the panel like a system tray? [Top Icons Plus](https://extensions.gnome.org/extension/2311/topicons-plus) or [(K)StatusNotifierItem/AppIndicator Support](https://extensions.gnome.org/extension/615/appindicator-support)
+```sh
+gnome-extensions prefs dash-to-panel@tiagosantosvdl.github.com
+```
 
-How do I add a traditional start menu? [Arc Menu](https://extensions.gnome.org/extension/3628/arcmenu/)
+Preferences cover panel position, visibility, appearance, window-button behavior,
+keyboard shortcuts, and multiple monitors. Existing saved preferences take
+precedence over repository defaults. Upstream's
+[customization guide](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Enable-and-Customize#customize-it)
+provides additional background.
 
-How do I disable the hot corner? [No Topleft Hot Corner](https://extensions.gnome.org/extension/118/no-topleft-hot-corner)
+### Appearance and spacing
 
-How do I move the notifications to somewhere other than the top center? [Notification Banner Reloaded](https://extensions.gnome.org/extension/4651/notification-banner-reloaded/)
+Under **Style → Global style**, **Window button border radius** controls window
+buttons and **Tray border radius** controls the clock, system icons, and other
+panel buttons. They are independent, support 0–20 pixels in steps of four, and
+default to zero for square corners. The existing app-icon highlight radius
+remains a separate override.
 
-How do I display Minimize & Maximize buttons? In the Tweak Tool application, turn on `Windows > Titlebar Buttons > Minimize & Maximize`.
+**Tray item padding** sets spacing around tray buttons. **Status icon padding**
+sets spacing around individual status icons, including the notification bell.
+These are separate from panel outer margins and padding. Icons and text supplied
+by other extensions can also have internal spacing of their own.
 
-How do I reset the extension to its default settings? `dconf reset -f /org/gnome/shell/extensions/dash-to-panel/`.
+### Workspace selector
 
-## 
-### Themes
-While this extension works well with most popular Gnome Shell themes, the following themes are known to have explicitly added custom styles for this extension:
-- [Ciliora Tertia](https://github.com/zagortenay333/ciliora-tertia-shell) / [Ciliora Secunda](https://github.com/zagortenay333/ciliora-secunda-shell)
-- [Plano](https://github.com/lassekongo83/plano-theme)
+Enable GNOME's Workspace Indicator extension, then open Dash to Panel preferences
+→ **Position**. Move **Workspace selector** between **Taskbar** and **Right box**
+in the panel element list. It has its own visibility and alignment controls and
+defaults to immediately before the right box, including in existing saved layouts.
 
+This positions the existing indicator on the panel that replaces GNOME's top bar.
+It does not create indicators on other monitors or move the indicator when the
+original top bar is kept.
 
-## 
-### Compatibility
+### Troubleshooting
 
-This extension has been tested with Gnome 3.18+.
+If the extension is not discovered immediately after installation, check the
+installed package and log out and back in:
 
-This extension manipulates the Gnome Main Panel, aka Top Bar. So, most other extensions which operate on the top bar should be compatible.
+```sh
+dpkg-query -W gnome-shell-extension-dash-to-panel-tiagosantosvdl
+```
 
-##
-### Volunteers needed!
+Follow relevant Shell messages with:
 
-This extension could be even better with your help! Any items in the issue tracker labelled `help wanted` or `good first issue` are up for grabs. For more info, see the [Contributing wiki page](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Contributing).
+```sh
+journalctl --user --follow --output=short-iso --grep 'dash-to-panel|Dash to Panel'
+```
 
-## 
-### Credits
+When reporting a problem, include relevant errors and the names and versions of
+other extensions that modify the panel. Shell themes and third-party indicators
+can affect appearance; declared compatibility does not establish every combination.
 
-This fork is maintained by [@tiagosantosvdl](https://github.com/tiagosantosvdl) with Codex. The upstream extension is developed and maintained by [@jderose9](https://github.com/jderose9) and [@charlesg99](https://github.com/charlesg99).
+## Development and verification
 
-Significant portions of code in this extension were derived from [Dash-to-Dock](https://micheleg.github.io/dash-to-dock/index.html).
+Runtime source lives in `src/`, preferences UI in `ui/`, schemas in `schemas/`,
+and translations in `po/`. Packaging uses the [Makefile](Makefile) and
+[scripts/package-release.py](scripts/package-release.py). Agent guidance is in
+[AGENTS.md](AGENTS.md).
 
-Additional credits: This extension leverages the work for [ZorinOS Taskbar](https://github.com/ZorinOS/zorin-taskbar) (used in [ZorinOS](https://zorinos.com/)) to show window previews and allow the dash from [Dash-to-Dock](https://micheleg.github.io/dash-to-dock/index.html) to be embedded in the Gnome main panel.
-Code to set anchor position taken from [Thoma5/gnome-shell-extension-bottompanel](https://github.com/Thoma5/gnome-shell-extension-bottompanel).
-Pattern for moving panel contents based on [Frippery Move Clock](http://frippery.org/extensions/) by R M Yorston.
-Ideas for recursing child actors and assigning inline styles are based on code from the extension [StatusAreaHorizontalSpacing](https://bitbucket.org/mathematicalcoffee/status-area-horizontal-spacing-gnome-shell-extension).
-##
+Run checks relevant to your change:
 
-#### Thanks to the following people for contributing via pull requests:
+```sh
+node --check src/extension.js
+node --experimental-vm-modules tests/workspace_selector_test.mjs
+python3 -m unittest discover -s tests -p '*test.py'
+glib-compile-schemas --strict --dry-run schemas
+git diff --check
+```
+
+Syntax-check every changed JavaScript file. Workspace-selector tests use mocked
+Shell dependencies. Packaging tests build real ZIP and Debian packages without
+installing them and check payloads, checksums, versions, and permissions.
+
+With development dependencies installed using `yarn.lock`, run Prettier and
+ESLint in check mode:
+
+```sh
+yarn install --frozen-lockfile
+yarn prettier 'src/**/*.js' --check
+yarn eslint 'src/**/*.js'
+```
+
+`npm run lint` applies formatting and automatic fixes, so it changes source files.
+
+The native [panel theme test](tests/panel_theme_test.js) checks every combination
+of window and tray radius, both panel orientations, and interaction states using
+GNOME St. It requires installed Shell/Mutter libraries and typelibs, memory-backed
+settings, and a Shell theme stylesheet. See [AGENTS.md](AGENTS.md) for setup notes.
+Computed styles and mocked tests do not verify compositor painting or login behavior.
+
+Validate desktop behavior separately: both panel orientations, multiple monitors,
+workspace-selector placement, window and tray highlighting, notification-bell
+coverage, padding changes, and independent radius controls.
+
+## Releases
+
+Update `version-name` in `metadata.json` and version examples in this README.
+Keep the integer GNOME `version` at `74` under this fork's current convention.
+Release tags must match `version-name`, such as `v74.3.1`.
+
+The [release workflow](.github/workflows/release.yml) checks source syntax,
+schemas, tests, version consistency, and package checksums. It builds and publishes
+packages when a matching version tag is pushed or a GitHub Release is published.
+The manual **Run workflow** option builds downloadable artifacts without
+publishing a release.
+
+After checking and committing the release changes, build with `make release`,
+verify its output, create an annotated tag for the new version, and push it with
+`master`. Use a new version for each release; do not replace a published tag.
+Confirm workflow success and actual release assets before announcing publication.
+
+Release filenames follow the convention used by the neighboring extension forks:
+`<uuid>-<version>.zip`,
+`gnome-shell-extension-<name>-tiagosantosvdl_<debian-version>_all.deb`, and
+`SHA256SUMS`. Prerelease tags such as `v74.3.1-rc.1` use `version-name`
+`74.3.1 rc.1`, ZIP version `74.3.1-rc.1`, and Debian version `74.3.1~rc.1`.
+
+## Issues and contributions
+
+Report bugs and request features in
+[this repository's issue tracker](https://github.com/tiagosantosvdl/dash-to-panel/issues).
+Include your distribution, GNOME Shell and extension versions, session type,
+monitor arrangement, Shell theme, relevant panel extensions, reproduction steps,
+and relevant Shell error logs.
+
+Submit changes through
+[pull requests](https://github.com/tiagosantosvdl/dash-to-panel/pulls), with a
+description of the behavior changed and verification performed. Upstream's
+[contributing guide](https://github.com/home-sweet-gnome/dash-to-panel/wiki/Contributing)
+provides additional background.
+
+## Credits and licensing
+
+This fork builds on Dash to Panel by [@jderose9](https://github.com/jderose9),
+[@charlesg99](https://github.com/charlesg99), and the contributors and translators
+credited below. Upstream project and donation links remain available through
+[the original repository](https://github.com/home-sweet-gnome/dash-to-panel).
+
+Significant portions of the code derive from
+[Dash to Dock](https://micheleg.github.io/dash-to-dock/index.html) and
+[ZorinOS Taskbar](https://github.com/ZorinOS/zorin-taskbar). Anchor positioning
+uses work from [Bottom Panel](https://github.com/Thoma5/gnome-shell-extension-bottompanel).
+Panel movement follows [Frippery Move Clock](http://frippery.org/extensions/)
+by R M Yorston, and inline-style traversal draws on StatusAreaHorizontalSpacing.
+
+Licensed under GPL-2.0-or-later; see [COPYING](COPYING).
+
+### Contributors
 
 - @franglais125 for launching apps by number (w/ overlay), bug fixes, and issue support
 - @LinxGem33 and @sbarrett322 for artwork, logos, screenshots and design effort
@@ -225,19 +310,11 @@ Ideas for recursing child actors and assigning inline styles are based on code f
 - @JimBroad for grayscale icons
 - @lufog for Gnome 50 support
 
-#### Bug Fixes: 
+### Bug fixes
 @imrvelj, @Teslator, @bil-elmoussaoui, @brandon-schumann, @sw9, @rockon999 , @lexruee, @3v1n0, @freeroot, @moqmar, @ArtyomZorin, @lkc0987, @saibotk, @vanillajonathan, @Zkdc, @leebickmtu, @l3nn4rt, @Melix19, @Aikatsui, @melix99, @kyrillzorin, @oneshadab, @CorvetteCole, @vantu5z, @spectreseven1138, @aperezdc, @smedir, @lucaxvi, @andyholmes, @vowstar, @T99Rots, @City-busz, @guoqiyi, @gcrabbe, @Anduin2017, @xalt7x, @Survolog, @TorosFanny
 
-#### Documentation Improvements:
+### Documentation
 @BoQsc, @zakkak, @dandv, @elliotwutingfeng
 
-#### Translations: 
+### Translations
 @frnogueira / @victorwpbastos / @vagkaefer / @jotavionm (pt_BR), @zeten30 / @Amereyeu (cs), @franglais125 / @calotam / @oeramirez / @jhonatanseminario / @oscfdezdz (es), @LaurentTreguier / @SolarLiner / @DelphinPETER (fr), @elsieholmes / @xalt7x (uk), @hosiet / @zhmars (zh\_CN), @jonnius / @linuxr01 / @Etamuk / @daPhipz (de), @urbalazs / @pappfer (hu), @crayxt (kk), @pkomur / @MartinPL / @alex4401 / @konradmb / @alewicki95 / @0rzech (pl), @AlexGluck / @GoodNike / @rjapolov / @vantu5z / @Keleth / @code-ascend / @antohami (ru), @sicklylife-jp / @ryonakano / @nexryai / @Umoxfo (ja), @oltulu / @TeknoMobil / @daenney / @osmancoskun (tr), @sbadux / @kowalski7cc / @l3nn4rt / @albanobattistella (it), @OriginCode / @pan93412 (zh\_TW), @ojn (sv), @frandieguez (gl), @kuroehanako / @MarongHappy (ko), @jose1711 / @dodog (sk), @eshagh79 (fa), @EkaterinePapava (ka), @jamalkamaladdin (az)
-
-
-## 
-### License & Terms ![](media/design/png/copyleft-16.png)
-
-Dash to Panel is available under the terms of the GPL-v2 or later license. See [`COPYING`](COPYING) for details.
-
-![](https://img.shields.io/badge/Language-JavaScript-yellow.svg) ![](https://img.shields.io/badge/Licence-GPL--2.0-blue.svg)
